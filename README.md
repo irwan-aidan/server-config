@@ -24,7 +24,18 @@ sudo mkdir -p /var/www
 sudo chown :staff /var/www
 sudo chmod 775 /var/www
 
+mkdir -p /usr/local/etc/nginx/ssl
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=US/ST=State/L=Town/O=Office/CN=localhost" -keyout /usr/local/etc/nginx/ssl/localhost.key -out /usr/local/etc/nginx/ssl/localhost.crt
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=US/ST=State/L=Town/O=Office/CN=phpmyadmin" -keyout /usr/local/etc/nginx/ssl/phpmyadmin.key -out /usr/local/etc/nginx/ssl/phpmyadmin.crt
+
+ln -sfv /usr/local/etc/nginx/sites-available/default /usr/local/etc/nginx/sites-enabled/default
+ln -sfv /usr/local/etc/nginx/sites-available/default-ssl /usr/local/etc/nginx/sites-enabled/default-ssl
+ln -sfv /usr/local/etc/nginx/sites-available/phpmyadmin /usr/local/etc/nginx/sites-enabled/phpmyadmin
+
+
 sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 
 launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
 launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.php56.plist
+
+from http://blog.frd.mn/install-nginx-php-fpm-mysql-and-phpmyadmin-on-os-x-mavericks-using-homebrew/
