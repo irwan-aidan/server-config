@@ -1,0 +1,20 @@
+ssh
+'''
+mkdir -p /etc/nginx/logs 
+mkdir -p /etc/nginx/sites-available 
+mkdir -p /etc/nginx/sites-enabled 
+mkdir -p /etc/nginx/conf.d 
+mkdir -p /etc/nginx/ssl 
+sudo mkdir -p /var/www
+
+sudo chown :staff /var/www 
+sudo chmod 775 /var/www
+
+mkdir -p /etc/nginx/ssl 
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=MY/ST=Sel/L=Gombak/O=Office/CN=localhost" -keyout /etc/nginx/ssl/localhost.key -out /etc/nginx/ssl/localhost.crt 
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=MY/ST=Sel/L=Gombak/O=Office/CN=phpmyadmin" -keyout /etc/nginx/ssl/phpmyadmin.key -out /etc/nginx/ssl/phpmyadmin.crt
+
+ln -sfv /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default 
+ln -sfv /etc/nginx/sites-available/default-ssl /etc/nginx/sites-enabled/default-ssl 
+ln -sfv /etc/nginx/sites-available/phpmyadmin /etc/nginx/sites-enabled/phpmyadmin
+'''
